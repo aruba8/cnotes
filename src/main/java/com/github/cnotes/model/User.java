@@ -1,11 +1,15 @@
 package com.github.cnotes.model;
 
 import org.hibernate.validator.constraints.Email;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -122,5 +126,12 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<GrantedAuthority> getAuthorities() {
+        return getRoles()
+                .stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
+                .collect(Collectors.toList());
     }
 }
