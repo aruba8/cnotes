@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -34,13 +35,13 @@ public class UserController {
         binder.addValidators(userCreateFormValidator);
     }
 
-    @RequestMapping(value = "/user/create", method = RequestMethod.GET)
-    public ModelAndView getUserCreatePage() {
+    @RequestMapping(value = "/public/register", method = RequestMethod.GET)
+    public ModelAndView getUserCreatePage(@ModelAttribute ModelMap map) {
         LOGGER.debug("Getting user create form");
         return new ModelAndView("user_create", "form", new UserCreateForm());
     }
 
-    @RequestMapping(value = "/user/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/public/register", method = RequestMethod.POST)
     public String handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "user_create";
