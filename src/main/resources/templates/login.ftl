@@ -1,5 +1,7 @@
 <#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
 <#-- @ftlvariable name="error" type="java.util.Optional<String>" -->
+<#import "/spring.ftl" as spring>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +17,7 @@
 
 <h1>Log in</h1>
 
-<form role="form" action="/login" method="post">
+<form role="form" action="<@spring.url '/login'/>" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
     <div>

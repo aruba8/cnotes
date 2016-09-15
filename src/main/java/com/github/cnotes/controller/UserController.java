@@ -35,13 +35,13 @@ public class UserController {
         binder.addValidators(userCreateFormValidator);
     }
 
-    @RequestMapping(value = "/public/register", method = RequestMethod.GET)
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView getUserCreatePage(@ModelAttribute ModelMap map) {
         LOGGER.debug("Getting user create form");
         return new ModelAndView("user_create", "form", new UserCreateForm());
     }
 
-    @RequestMapping(value = "/public/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "user_create";
