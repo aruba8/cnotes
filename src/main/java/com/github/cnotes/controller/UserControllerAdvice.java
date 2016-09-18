@@ -16,7 +16,6 @@ public class UserControllerAdvice {
         CurrentUser user = null;
         if (authentication != null) {
             user = (CurrentUser) authentication.getPrincipal();
-            System.out.println(user.getAuthorities());
         }
         return (authentication == null) ? null : user;
     }
