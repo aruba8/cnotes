@@ -24,14 +24,15 @@ public class AdminController {
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ModelAndView adminPage(){
         List<User> users = (List<User>) userService.getAllUsers();
-        return new ModelAndView("admin", "users", users);
+        return new ModelAndView("admin_dashboard", "users", users);
     }
 
 
     @RequestMapping(value = "/admin/edit_user", method = RequestMethod.GET)
     public ModelAndView adminEditUserPage(@RequestParam("id") long userId){
-        List<User> users = (List<User>) userService.getAllUsers();
-        return new ModelAndView("admin", "users", users);
+        User user = userService.getUserById(userId).get();
+
+        return new ModelAndView("admin_edit_user", "user", user);
     }
 
 }

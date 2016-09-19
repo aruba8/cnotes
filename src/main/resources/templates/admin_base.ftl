@@ -1,7 +1,26 @@
-<#import "base.ftl" as layout>
-<#import "/spring.ftl" as spring>
+<#macro admin_base>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<@layout.base "Administration">
+    <!-- Website CSS style -->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+            integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+
+    <title>Administration</title>
+</head>
+<body>
 
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
@@ -24,12 +43,6 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left" method="GET" role="search">
-                <div class="form-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-            </form>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="http://www.pingpong-labs.com" target="_blank">Visit Site</a></li>
                 <li class="dropdown ">
@@ -62,7 +75,8 @@
                     <!-- Main Menu -->
                     <div class="side-menu-container">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="#"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a>
+                            <li class="active"><a href="#"><span class="glyphicon glyphicon-dashboard"></span>
+                                Dashboard</a>
                             </li>
                             <li><a href="#"><span class="glyphicon glyphicon-plane"></span> Active Link</a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-cloud"></span> Link</a></li>
@@ -76,41 +90,14 @@
             </div>
         </div>
     </div>
-    <div class="col-md-10 content">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Dashboard
-            </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    <#list users as user>
-                        <li class="list-group-item">
-                        ${user.firstName} ${user.middleName} ${user.lastName}
 
-                            <div class="pull-right action-buttons">
-                                <a href="/admin/edit_user?id=${user.id}" class="edit_user" name="${user.id}">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </a>
-                                <a href="" class="trash">
-                                    <span
-                                        class="glyphicon glyphicon-trash">
+<#--nested-->
+    <#nested/>
 
-                                    </span></a>
-                                <a href="" class="flag"><span
-                                        class="glyphicon glyphicon-flag"></span></a>
-                            </div>
-                        </li>
 
-                    </#list>
-                </ul>
-
-            </div>
-        </div>
-
-    </div>
 </div>
-</div>
-</div>
-<script src="<@spring.url 'js/j.js'/>"></script>
+<script src="js/j.js"></script>
+</body>
+</html>
 
-</@layout.base>
+</#macro>
