@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,11 +40,13 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/edit_user", method = RequestMethod.POST)
-    public ModelAndView adminEditUserPage(@Valid UserEditForm form, BindingResult bindingResult){
+    public ModelAndView adminEditUserPage(@ModelAttribute("form") @Valid UserEditForm form, BindingResult bindingResult) {
         User user = userService.getUserByEmail(form.getEmail()).get();
 
         if (bindingResult.hasErrors()){
-            return new ModelAndView("admin/admin_edit_user", "form", new UserEditForm(user));
+            List<FieldError> errors = bindingResult.getFieldErrors();
+
+            return new ModelAndView("admin/admin_edit_user", "form", form);
         }
 
         user.setFirstName(form.getFirstName());

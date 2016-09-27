@@ -14,6 +14,8 @@
         </div>
         <div class="main-login main-center">
             <form role="form" class="form-horizontal" method="post" action="">
+                <@spring.bind "form"/>
+                <@spring.showErrors '<br/>', 'text-danger' />
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
                 <div class="form-group">
@@ -22,9 +24,9 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="firstName" id="firstName"
-                                   placeholder="Enter your first name" value="${form.firstName}"/>
+                            <@spring.formInput "form.firstName","class=\"form-control\" placeholder=\"Enter your first name\"" />
                         </div>
+                        <@spring.showErrors "form.firstName","text-danger"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -33,9 +35,9 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="lastName" id="lastName"
-                                   placeholder="Enter your last name" value="${form.lastName}"/>
+                            <@spring.formInput "form.lastName","class=\"form-control\" placeholder=\"Enter your last name\"" />
                         </div>
+                        <@spring.showErrors "form.lastName","text-danger"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -44,9 +46,9 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="middleName" id="middleName"
-                                   placeholder="Enter your middle name" value="${form.middleName}"/>
+                            <@spring.formInput "form.middleName","class=\"form-control\" placeholder=\"Enter your middle name\"" />
                         </div>
+                        <@spring.showErrors "form.middleName","text-danger"/>
                     </div>
                 </div>
 
@@ -56,9 +58,9 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" id="email"
-                                   placeholder="Enter your Email" value="${form.email}"/>
+                            <@spring.formInput "form.email","class=\"form-control\" placeholder=\"Enter your Email\"" />
                         </div>
+                        <@spring.showErrors "form.email","text-danger"/>
                     </div>
                 </div>
 
@@ -69,9 +71,9 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password" id="password"
-                                   placeholder="Enter your Password"/>
+                            <@spring.formPasswordInput "form.password","class=\"form-control\" placeholder=\"Enter your Password \"" />
                         </div>
+                        <@spring.showErrors "form.password","text-danger"/>
                     </div>
                 </div>
 
@@ -81,9 +83,9 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="passwordRepeated" id="passwordRepeated"
-                                   placeholder="Confirm your Password"/>
+                            <@spring.formPasswordInput "form.passwordRepeated","class=\"form-control\" placeholder=\"Confirm your Password\"" />
                         </div>
+                        <@spring.showErrors "This field","text-danger"/>
                     </div>
                 </div>
 
@@ -97,15 +99,6 @@
         </div>
     </div>
 </div>
-    <@spring.bind "form" />
-    <#if spring.status.error>
-    <ul>
-        <#list spring.status.errorMessages as error>
-            <li>${error}</li>
-        </#list>
-    </ul>
-    </#if>
-
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </@layout.base>

@@ -9,29 +9,26 @@ import javax.validation.constraints.Size;
 
 public class UserEditForm {
 
-    public UserEditForm(User user){
+    @NotNull
+    @Size(min = 3, max = 80)
+    private String firstName;
+    @NotNull
+    @Size(min = 3, max = 80)
+    private String lastName;
+    private String middleName;
+    @NotNull
+    @Email
+    private String email;
+
+    public UserEditForm(User user) {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.middleName = user.getMiddleName();
         this.email = user.getEmail();
     }
 
-    public UserEditForm(){}
-
-    @NotNull
-    @Size(min = 2, max = 80)
-    private String firstName;
-
-    @NotNull
-    @Size(min = 2, max = 80)
-    private String lastName;
-
-    private String middleName;
-
-    @NotNull
-    @Email
-    private String email;
-
+    public UserEditForm() {
+    }
 
     public String getFirstName() {
         return firstName;

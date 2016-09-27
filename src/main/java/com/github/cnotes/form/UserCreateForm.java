@@ -1,25 +1,29 @@
 package com.github.cnotes.form;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Size;
 
 public class UserCreateForm {
 
-    @NotEmpty
-    private String firstName = "";
+    @Size(min = 3, max = 80)
+    private String firstName;
+
+    @Size(min = 3, max = 80)
+    private String lastName;
+
+    private String middleName;
 
     @NotEmpty
-    private String lastName = "";
+    @Email
+    private String email;
 
-    private String middleName = "";
+    @Size(min = 3, max = 30)
+    private String password;
 
-    @NotEmpty
-    private String email = "";
-
-    @NotEmpty
-    private String password = "";
-
-    @NotEmpty
-    private String passwordRepeated = "";
+    @Size(min = 3, max = 30)
+    private String passwordRepeated;
 
     public String getFirstName() {
         return firstName;

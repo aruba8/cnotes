@@ -10,13 +10,18 @@
         </div>
         <div class="panel-body">
             <form class="form-horizontal" action method="post">
+                <@spring.bind "form"/>
+                <@spring.showErrors '*', 'errors' />
+
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                 <div class="form-group">
                     <div class="col-sm-2 control-label">
                         <label for="firstName">First name</label>
                     </div>
                     <div class="col-sm-6">
-                        <input name="firstName" id="firstName" type="text" class="form-control"  value="${form.firstName}">
+                        <@spring.formInput "form.firstName","class=\"form-control\"" />
+                        <@spring.showErrors "form.firstName","text-danger"/>
                     </div>
                 </div>
 
@@ -25,8 +30,8 @@
                         <label for="lastName">Last name</label>
                     </div>
                     <div class="col-sm-6">
-
-                        <input name="lastName" id="lastName" type="text" class="form-control" value="${form.lastName}"">
+                        <@spring.formInput "form.lastName","class=\"form-control\"" />
+                        <@spring.showErrors "form.lastName", "text-danger"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -34,7 +39,8 @@
                         <label for="middleName">Middle name</label>
                     </div>
                     <div class="col-sm-6">
-                        <input name="middleName" id="middleName" type="text" class="form-control" value="${form.middleName}"">
+                        <@spring.formInput "form.middleName","class=\"form-control\"" />
+                        <@spring.showErrors "form.middleName", "text-danger"/>
                     </div>
                 </div>
                 <div class="form-group">
