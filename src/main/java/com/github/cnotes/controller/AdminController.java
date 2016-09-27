@@ -1,16 +1,19 @@
 package com.github.cnotes.controller;
 
+import com.github.cnotes.form.UserEditForm;
 import com.github.cnotes.model.User;
 import com.github.cnotes.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -24,15 +27,34 @@ public class AdminController {
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ModelAndView adminPage(){
         List<User> users = (List<User>) userService.getAllUsers();
-        return new ModelAndView("admin_dashboard", "users", users);
+        return new ModelAndView("admin/admin_dashboard", "users", users);
     }
 
 
     @RequestMapping(value = "/admin/edit_user", method = RequestMethod.GET)
-    public ModelAndView adminEditUserPage(@RequestParam("id") long userId){
+    public ModelAndView adminEditUserPage(@RequestParam("id") long userId, UserEditForm form){
         User user = userService.getUserById(userId).get();
+        return new ModelAndView("admin/admin_edit_user", "form", new UserEditForm(user));
+    }
 
-        return new ModelAndView("admin_edit_user", "user", user);
+    @RequestMapping(value = "/admin/edit_user", method = RequestMethod.POST)
+    public ModelAndView adminEditUserPage(@Valid UserEditForm form, BindingResult bindingResult){
+        User user = userService.getUserByEmail(form.getEmail()).get();
+
+        if (bindingResult.hasErrors()){
+            return new ModelAndView("admin/admin_edit_user", "form", new UserEditForm(user));
+        }
+
+        user.setFirstName(form.getFirstName());
+        user.setLastName(form.getLastName());
+        user.setMiddleName(form.getMiddleName());
+        userService.save(user);
+
+
+
+
+
+        return new ModelAndView("admin/admin_edit_user", "form", new UserEditForm(user));
     }
 
 }

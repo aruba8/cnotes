@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserById(long id) {
-        return Optional.ofNullable(userRepository.findOne(id));
+        return userRepository.findOne(id);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(UserCreateForm form) {
+    public User createNewUser(UserCreateForm form) {
         User user = new User();
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
@@ -44,5 +44,10 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(true);
         user.setRegistrationDate(new Date());
         return userRepository.save(user);
+    }
+
+    @Override
+    public void save(User user) {
+        userRepository.save(user);
     }
 }

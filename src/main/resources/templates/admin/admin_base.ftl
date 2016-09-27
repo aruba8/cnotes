@@ -1,4 +1,6 @@
 <#macro admin_base>
+    <#import "../spring.ftl" as spring>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Website CSS style -->
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="<@spring.url 'css/main.css'/>">
 
     <!-- Website Font style -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
@@ -36,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="<@spring.url '/admin/'/>">
                 Administrator
             </a>
         </div>
@@ -96,7 +98,7 @@
 
 
 </div>
-<script src="js/j.js"></script>
+<script src="<@spring.url 'js/j.js'/>"></script>
 </body>
 </html>
 

@@ -47,7 +47,7 @@ public class UserController {
             return "user_create";
         }
         try {
-            userService.create(form);
+            userService.createNewUser(form);
         } catch (DataIntegrityViolationException e) {
             bindingResult.reject("email.exists", "Email already exists");
             return "user_create";
