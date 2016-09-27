@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView getUserCreatePage(@ModelAttribute ModelMap map) {
+    public ModelAndView getUserCreatePage() {
         LOGGER.debug("Getting user create form");
         return new ModelAndView("user_create", "form", new UserCreateForm());
     }
@@ -52,8 +52,15 @@ public class UserController {
             bindingResult.reject("email.exists", "Email already exists");
             return "user_create";
         }
-        return "redirect:/";
+        return "redirect:/success/";
     }
+
+    @RequestMapping(value = "/success/", method = RequestMethod.GET)
+    public ModelAndView successPage(@ModelAttribute ModelMap map) {
+        LOGGER.debug("Getting success page");
+        return new ModelAndView("success");
+    }
+
 
 
 }

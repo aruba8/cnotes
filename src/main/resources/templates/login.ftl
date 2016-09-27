@@ -14,6 +14,11 @@
         <div class="main-login main-center">
             <form role="form" class="form-horizontal" method="post" action="<@spring.url '/login'/>">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <#if error.isPresent()>
+                    <p class="text-danger">The email or password you have entered is invalid, try again.</p>
+                ${error.get()}
+                </#if>
+
 
                 <div class="form-group">
                     <label for="email" class="cols-sm-2 control-label">Your Email</label>
@@ -56,10 +61,6 @@
         </div>
     </div>
 </div>
-    <#if error.isPresent()>
-    <p>The email or password you have entered is invalid, try again.</p>
-    ${error.get()}
-    </#if>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
