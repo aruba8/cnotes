@@ -1,11 +1,14 @@
 package com.github.cnotes.form;
 
 
+import com.github.cnotes.model.Role;
 import com.github.cnotes.model.User;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserEditForm {
 
@@ -20,11 +23,17 @@ public class UserEditForm {
     @Email
     private String email;
 
+    private Set<String> roles;
+
     public UserEditForm(User user) {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.middleName = user.getMiddleName();
         this.email = user.getEmail();
+        this.roles = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            this.roles.add(role.getRoleName());
+        }
     }
 
     public UserEditForm() {
@@ -60,5 +69,13 @@ public class UserEditForm {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 }

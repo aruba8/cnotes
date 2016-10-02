@@ -27,14 +27,14 @@ public class AdminController {
     private UserService userService;
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public ModelAndView adminPage(){
+    public ModelAndView adminPage() {
         List<User> users = (List<User>) userService.getAllUsers();
         return new ModelAndView("admin/admin_dashboard", "users", users);
     }
 
 
     @RequestMapping(value = "/admin/edit_user", method = RequestMethod.GET)
-    public ModelAndView adminEditUserPage(@RequestParam("id") long userId, UserEditForm form){
+    public ModelAndView adminEditUserPage(@RequestParam("id") long userId, UserEditForm form) {
         User user = userService.getUserById(userId).get();
         return new ModelAndView("admin/admin_edit_user", "form", new UserEditForm(user));
     }
@@ -43,7 +43,7 @@ public class AdminController {
     public ModelAndView adminEditUserPage(@ModelAttribute("form") @Valid UserEditForm form, BindingResult bindingResult) {
         User user = userService.getUserByEmail(form.getEmail()).get();
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             List<FieldError> errors = bindingResult.getFieldErrors();
 
             return new ModelAndView("admin/admin_edit_user", "form", form);
@@ -53,9 +53,6 @@ public class AdminController {
         user.setLastName(form.getLastName());
         user.setMiddleName(form.getMiddleName());
         userService.save(user);
-
-
-
 
 
         return new ModelAndView("admin/admin_edit_user", "form", new UserEditForm(user));
