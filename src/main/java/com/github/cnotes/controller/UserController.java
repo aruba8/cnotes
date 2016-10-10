@@ -61,6 +61,16 @@ public class UserController {
         return new ModelAndView("success");
     }
 
+    @RequestMapping(value = "/user/profile/", method = RequestMethod.GET)
+    public ModelAndView userProfilePage(@ModelAttribute ModelMap map) {
+        LOGGER.debug("Getting success page");
+        return new ModelAndView("user_profile");
+    }
 
+    @RequestMapping(value = "/user/profile/docs")
+    public ModelAndView documentsPage(){
+        //TBD
+        return null;
+    }
 
 }
