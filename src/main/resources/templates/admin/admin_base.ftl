@@ -1,6 +1,4 @@
 <#macro admin_base>
-<#--<#import "../spring.ftl" as spring>-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +75,7 @@
                     <!-- Main Menu -->
                     <div class="side-menu-container">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="/admin/"><span class="glyphicon glyphicon-dashboard"></span>
+                            <li class="active"><a href="<@spring.url '/admin/'/>"><span class="glyphicon glyphicon-dashboard"></span>
                                 Dashboard</a>
                             </li>
                             <li><a href="#"><span class="glyphicon glyphicon-plane"></span> Active Link</a></li>

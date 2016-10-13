@@ -1,22 +1,29 @@
 package com.github.cnotes.service.impl;
 
 import com.github.cnotes.form.UserCreateForm;
+import com.github.cnotes.model.Role;
 import com.github.cnotes.model.User;
+import com.github.cnotes.repository.RoleRepository;
 import com.github.cnotes.repository.UserRepository;
 import com.github.cnotes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository userRepository;
+
+    private final RoleRepository roleRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public Optional<User> getUserById(long id) {
@@ -36,6 +43,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createNewUser(UserCreateForm form) {
         User user = new User();
+        Role roleUser = roleRepository.findOne(1l).get();
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleUser);
+        user.setRoles(roles);
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setMiddleName(form.getMiddleName());

@@ -1,4 +1,5 @@
 <#import "base.ftl" as layout>
+<#import "spring.ftl" as spring>
 <@layout.base "Home">
 
 <#include "navigation.ftl" />
@@ -25,7 +26,7 @@
                         </a>
                     </li>
                     <li>
-                        <a data-toggle="tab" href="/user/profile/docs/">
+                        <a data-toggle="tab" href="<@spring.url '/user/profile/docs/'/>">
                             <span class="glyphicon glyphicon-calendar"></span>
                             documents
                         </a>
