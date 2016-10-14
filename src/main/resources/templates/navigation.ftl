@@ -1,3 +1,5 @@
+<#macro navigation menu>
+
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -14,13 +16,13 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li>
+                <li <#if menu == "About">class="active"</#if>>
                     <a href="#">About</a>
                 </li>
-                <li>
+                <li <#if menu == "Services">class="active"</#if>>
                     <a href="#">Services</a>
                 </li>
-                <li>
+                <li <#if menu == "Contact">class="active"</#if> >
                     <a href="#">Contact</a>
                 </li>
             </ul>
@@ -29,3 +31,4 @@
     </div>
     <!-- /.container -->
 </nav>
+</#macro>
