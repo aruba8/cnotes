@@ -1,9 +1,9 @@
 <#import "base.ftl" as layout>
 <#import "spring.ftl" as spring>
+<#import "navigation.ftl" as navigation>
+
 <@layout.base "Home">
-
-<#include "navigation.ftl" />
-
+<@navigation.navigation "Profile"/>
 <div class="container">
     <div class="row">
         <div class="col-sm-4 col-md-4 user-details">
