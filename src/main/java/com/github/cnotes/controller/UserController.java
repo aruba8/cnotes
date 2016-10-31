@@ -2,20 +2,23 @@ package com.github.cnotes.controller;
 
 import com.github.cnotes.form.UserCreateForm;
 import com.github.cnotes.form.UserCreateFormValidator;
+import com.github.cnotes.service.StorageService;
 import com.github.cnotes.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -24,24 +27,31 @@ public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final UserCreateFormValidator userCreateFormValidator;
+
+    private final StorageService storageService;
 
     @Autowired
-    private UserCreateFormValidator userCreateFormValidator;
+    public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator, StorageService storageService) {
+        this.userService = userService;
+        this.userCreateFormValidator = userCreateFormValidator;
+        this.storageService = storageService;
+    }
 
     @InitBinder("form")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(userCreateFormValidator);
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @GetMapping("/register")
     public ModelAndView getUserCreatePage() {
         LOGGER.debug("Getting user create form");
         return new ModelAndView("user_create", "form", new UserCreateForm());
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping("/register")
     public String handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "user_create";
@@ -55,22 +65,38 @@ public class UserController {
         return "redirect:/success/";
     }
 
-    @RequestMapping(value = "/success/", method = RequestMethod.GET)
+    @GetMapping("/success/")
     public ModelAndView successPage(@ModelAttribute ModelMap map) {
         LOGGER.debug("Getting success page");
         return new ModelAndView("success");
     }
 
-    @RequestMapping(value = "/user/profile/", method = RequestMethod.GET)
+    @GetMapping("/user/profile/")
     public ModelAndView userProfilePage(@ModelAttribute ModelMap map) {
         LOGGER.debug("Getting success page");
+        //todo add file uploader form
         return new ModelAndView("user_profile");
     }
 
-    @RequestMapping(value = "/user/profile/docs")
-    public ModelAndView documentsPage(){
-        //TBD
-        return null;
+    @PostMapping("/user/profile/docs")
+    public String documentsPage(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+
+        storageService.store(file);
+        redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
+
+        return "redirect:/user/profile/";
     }
+
+    @GetMapping("/files/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+
+        Resource file = storageService.loadAsResource(filename);
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
+    }
+
 
 }

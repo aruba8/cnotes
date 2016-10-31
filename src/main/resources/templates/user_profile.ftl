@@ -3,7 +3,7 @@
 <#import "navigation.ftl" as navigation>
 
 <@layout.base "Home">
-<@navigation.navigation "Profile"/>
+    <@navigation.navigation "Profile"/>
 <div class="container">
     <div class="row">
         <div class="col-sm-4 col-md-4 user-details">
@@ -26,7 +26,7 @@
                         </a>
                     </li>
                     <li>
-                        <a data-toggle="tab" href="<@spring.url '/user/profile/docs/'/>">
+                        <a data-toggle="tab" href="<@spring.url '#docs'/>">
                             <span class="glyphicon glyphicon-calendar"></span>
                             documents
                         </a>
@@ -43,8 +43,11 @@
                         <div id="email" class="tab-pane">
                             <h4>Send Message</h4>
                         </div>
-                        <div id="events" class="tab-pane">
-                            <h4>Events</h4>
+                        <div id="docs" class="tab-pane">
+                            <h4>Documents</h4>
+                            <form method="post" action="<@spring.url '/user/profile/docs'/>">
+
+                            </form>
                         </div>
                     </div>
                 </div>
