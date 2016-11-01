@@ -1,4 +1,4 @@
-package com.github.cnotes.config;
+package com.github.cnotes.service;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

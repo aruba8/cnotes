@@ -1,4 +1,4 @@
-package com.github.cnotes.service;
+package com.github.cnotes.config;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;

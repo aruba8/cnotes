@@ -2,7 +2,7 @@ package com.github.cnotes.controller;
 
 import com.github.cnotes.form.UserCreateForm;
 import com.github.cnotes.form.UserCreateFormValidator;
-import com.github.cnotes.service.StorageService;
+import com.github.cnotes.config.StorageService;
 import com.github.cnotes.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +18,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -75,6 +77,13 @@ public class UserController {
     public ModelAndView userProfilePage(@ModelAttribute ModelMap map) {
         LOGGER.debug("Getting success page");
         //todo add file uploader form
+
+        map.addAttribute("files" ,storageService.loadAll()
+                .map(path -> MvcUriComponentsBuilder
+                                .fromMethodName(UserController.class, "serveFile", path.getFileName().toString())
+                                .build().toString())
+                .collect(Collectors.toList()));
+
         return new ModelAndView("user_profile");
     }
 

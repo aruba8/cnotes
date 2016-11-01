@@ -45,15 +45,31 @@
                         </div>
                         <div id="docs" class="tab-pane">
                             <h4>Documents</h4>
-                            <form method="post" action="<@spring.url '/user/profile/docs'/>">
+                            <form method="post" action="<@spring.url '/user/profile/docs'/>"
+                                  enctype="multipart/form-data">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
+                                <table>
+                                    <tr>
+                                        <td>File to upload:</td>
+                                        <td><input type="file" name="file"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><input type="submit" value="Upload"/></td>
+                                    </tr>
+                                </table>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-sm-4 col-md-4 user-docs">
+            <h3>Uploaded Documents</h3>
+        </div>
+
+        </div>
 </div>
 
 
